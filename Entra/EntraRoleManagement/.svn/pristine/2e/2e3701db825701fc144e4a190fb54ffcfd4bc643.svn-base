@@ -1,0 +1,70 @@
+param(
+    [Parameter(Mandatory)]
+    [string]$UserPrincipalName
+)
+
+function Write-Color {
+    param(
+        [string]$Text,
+        [string]$Color = "White",
+        [switch]$Bold
+    )
+    if ($Bold) { Write-Host ("[*] " + $Text) -ForegroundColor $Color }
+    else       { Write-Host $Text -ForegroundColor $Color }
+}
+
+# Connect if needed
+if (-not (Get-MgContext)) {
+    Write-Color "Connecting to Microsoft Graph…" "Cyan" -Bold
+    Connect-MgGraph -Scopes "Directory.Read.All","RoleManagement.Read.Directory" | Out-Null
+}
+
+Write-Color "Looking up user…" Yellow -Bold
+
+$user = Get-MgUser -Filter "userPrincipalName eq '$UserPrincipalName'" -ConsistencyLevel eventual
+if (-not $user) {
+    Write-Color "User not found: $UserPrincipalName" Red -Bold
+    return
+}
+
+Write-Color "Retrieving directory roles…" Yellow -Bold
+
+# Get ALL role definitions
+$roleDefinitions = Get-MgRoleManagementDirectoryRoleDefinition
+
+# Get ALL assignments for this user
+$assignments = Get-MgRoleManagementDirectoryRoleAssignment |
+    Where-Object { $_.PrincipalId -eq $user.Id }
+
+if ($assignments.Count -eq 0) {
+    Write-Color "User has no active role assignments." Yellow -Bold
+    return
+}
+
+Write-Host ""
+
+foreach ($a in $assignments) {
+
+    $roleDef = $roleDefinitions | Where-Object { $_.Id -eq $a.RoleDefinitionId }
+
+    Write-Host "┌────────────────────────────────────────────────┐" -ForegroundColor DarkGray
+    Write-Host ("│  ROLE: ") -ForegroundColor DarkGray -NoNewline
+    Write-Host ($roleDef.DisplayName.PadRight(34)) -ForegroundColor Cyan -NoNewline
+    Write-Host "      │" -ForegroundColor DarkGray
+
+    Write-Host ("│  ROLE ID: ") -ForegroundColor DarkGray -NoNewline
+    Write-Host ($roleDef.Id.PadRight(31)) -ForegroundColor Yellow -NoNewline
+    Write-Host " │" -ForegroundColor DarkGray
+
+    Write-Host "└────────────────────────────────────────────────┘" -ForegroundColor DarkGray
+    Write-Host ""
+
+    # Output pipeline object
+    [PSCustomObject]@{
+        UserPrincipalName = $user.UserPrincipalName
+        DisplayName        = $user.DisplayName
+        RoleName           = $roleDef.DisplayName
+        RoleId             = $roleDef.Id
+        UserObjectId       = $user.Id
+    }
+}

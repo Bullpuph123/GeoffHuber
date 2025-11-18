@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Role Removal Report for Jacob.Harms@victor.org</title>
+<style>
+body { font-family: Arial; background: #f4f4f8; padding: 20px; }
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.success { color: green; font-weight: bold; }
+.fail { color: red; font-weight: bold; }
+.none { color: #555; font-weight: bold; }
+.role { font-size: 20px; font-weight: bold; color: #1a5276; }
+</style>
+</head>
+<body>
+<h1>Role Removal Report</h1>
+<h2>User: Jacob.Harms@victor.org</h2>
+<p>Generated: 11/17/2025 09:57:49</p><div class='card'>
+<b class='role'>Role:</b> Guest Inviter<br>
+<b>Role ID:</b> 95e79109-95c0-4d8e-aee3-d01accf2d47b<br>
+<b>Status:</b> <span class='success'>Removed</span><br>
+<b>Timestamp:</b> 11/17/2025 09:57:48<br>
+</div><div class='card'>
+<b class='role'>Role:</b> Global Administrator<br>
+<b>Role ID:</b> 62e90394-69f5-4237-9190-012177145e10<br>
+<b>Status:</b> <span class='success'>Removed</span><br>
+<b>Timestamp:</b> 11/17/2025 09:57:49<br>
+</div><div class='card'>
+<b class='role'>Role:</b> Cloud Application Administrator<br>
+<b>Role ID:</b> 158c047a-c907-4556-b7ef-446551a6b5f7<br>
+<b>Status:</b> <span class='success'>Removed</span><br>
+<b>Timestamp:</b> 11/17/2025 09:57:49<br>
+</div></body></html>

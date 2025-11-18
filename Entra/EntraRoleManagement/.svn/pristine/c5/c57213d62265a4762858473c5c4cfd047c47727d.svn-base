@@ -1,0 +1,280 @@
+# 📘 README — Entra Role Management Scripts
+A PowerShell Automation Toolkit for Managing Entra ID Role Assignments  
+Scripts: **Get-UserRoles.ps1** & **Remove-UserRoles.ps1**
+
+---
+
+## 🌟 Overview
+
+This toolkit provides two coordinated PowerShell 7 scripts that automate the process of:
+
+- Retrieving **actual Entra ID (Azure AD) role assignments**
+- Removing those assignments
+- Displaying rich, color-formatted console output
+- Generating HTML audit reports
+- Using modern **Microsoft Graph PowerShell SDK v2**
+- Supporting **pipeline usage** between both scripts
+
+These scripts use **UnifiedRoleAssignments**, the only correct method for role assignment management in Microsoft Graph v2.
+
+---
+
+## 🗂️ Included Scripts
+
+| Script | Purpose |
+|--------|---------|
+| **Get-UserRoles.ps1** | Retrieves all *active* Entra ID RBAC role assignments for a user |
+| **Remove-UserRoles.ps1** | Removes each role assignment and generates an HTML report |
+
+---
+
+## 🚀 Requirements
+
+These scripts require:
+
+- **PowerShell 7+ (pwsh)**
+- **Microsoft Graph PowerShell SDK v2**
+- Ability to authenticate with the correct Graph scopes
+- Entra role permissions allowing role assignment removal (see below)
+
+Install Graph SDK:
+
+```powershell
+Install-Module Microsoft.Graph -Scope CurrentUser -Force
+```
+
+---
+
+## 🔌 Authentication
+
+Both scripts will automatically connect if needed, but you may pre-authenticate using:
+
+```powershell
+Connect-MgGraph -Scopes "Directory.Read.All","Directory.ReadWrite.All","RoleManagement.ReadWrite.Directory"
+```
+
+You will be prompted to authenticate.
+
+---
+
+## 🎨 Script 1 — Get-UserRoles.ps1
+
+### Purpose
+
+Retrieve *actual* Entra ID role assignments for the specified user.
+
+### Usage
+
+```powershell
+.\Get-UserRoles.ps1 -UserPrincipalName "jacob.harms@victor.org"
+```
+
+### Output Example
+
+```text
+┌────────────────────────────────────────────────┐
+│  ROLE: Global Administrator                    │
+│  ROLE ID: 62e90394-69f5-4237-9190-012177145e10 │
+└────────────────────────────────────────────────┘
+```
+
+### What This Script Does
+
+- Looks up the user
+- Retrieves **UnifiedRoleAssignments** (real RBAC assignments)
+- Resolves role names using Role Definitions
+- Outputs objects to the pipeline with:
+  - `RoleName`
+  - `RoleId` (RoleDefinitionId)
+  - `UserObjectId`
+  - `UserPrincipalName`
+
+---
+
+## 🧹 Script 2 — Remove-UserRoles.ps1
+
+### Purpose
+
+Remove each role assignment from the piped input and generate an HTML report.
+
+### Recommended Usage (Pipeline)
+
+```powershell
+.\Get-UserRoles.ps1 -UserPrincipalName "jacob.harms@victor.org" |
+.\Remove-UserRoles.ps1
+```
+
+### What This Script Does
+
+- Accepts piped input from `Get-UserRoles.ps1`
+- Locates the correct `UnifiedRoleAssignment` for each role
+- Attempts deletion using the Graph v2 cmdlet:
+
+  ```powershell
+  Remove-MgRoleManagementDirectoryRoleAssignment
+  ```
+
+- Displays colorful results (SUCCESS / FAILED) in the console
+- Writes an HTML report to the current directory
+- Supports multiple roles per user
+
+---
+
+## 📁 SVN Folder Structure
+
+```text
+/EntraRoleManagement/
+│
+├── Get-UserRoles.ps1
+├── Remove-UserRoles.ps1
+├── README.md
+└── Reports/
+       └── UserRoleRemoval-<username>-<timestamp>.html
+```
+
+---
+
+## 🛑 Permissions — Understanding 403 Errors
+
+If removal fails with:
+
+```text
+403 Forbidden
+Authorization_RequestDenied
+Insufficient privileges to complete the operation.
+```
+
+This is **not** a script error.  
+This is Entra RBAC protecting role assignments.
+
+Even with Graph scopes like:
+
+- `RoleManagement.ReadWrite.Directory`
+- `Directory.ReadWrite.All`
+
+you still **must** have the correct **Entra admin role**.
+
+---
+
+## 🔐 Required Entra Roles to Remove Role Assignments
+
+To remove roles, your signed-in account must be one of:
+
+| Entra Role | Allows Removing Assignments? |
+|------------|-----------------------------|
+| **Global Administrator** | ✔ Yes |
+| **Privileged Role Administrator (PRA)** | ✔ Yes |
+| **Role Management Administrator** | ✔ Yes |
+| User Administrator | ❌ No |
+| Cloud App Administrator | ❌ No |
+| Security Reader | ❌ No |
+
+If you are not one of the three listed roles, removal will **always** fail.
+
+---
+
+## 🛠️ Fixing Permissions
+
+### ✔ Option 1 — Activate PIM
+
+If your org uses PIM:
+
+1. Go to **Entra Admin Center**
+2. Navigate to **Identity → Roles & Administrators**
+3. Select **Global Administrator** or **Privileged Role Administrator**
+4. Go to **My Assignments**
+5. Click **Activate**
+
+Then reconnect:
+
+```powershell
+Connect-MgGraph -Scopes "RoleManagement.ReadWrite.Directory Directory.ReadWrite.All"
+```
+
+---
+
+### ✔ Option 2 — Sign in as a Global Administrator
+
+Sign in with an account that is a **Global Administrator**.  
+This account can remove any role assignments.
+
+---
+
+### ✔ Option 3 — Assign “Role Management Administrator”
+
+Assign the **Role Management Administrator** role to your account.  
+This role is designed specifically for managing role assignments.
+
+---
+
+## 🧪 Testing Your Own Permissions
+
+See which Entra roles *you* actually have:
+
+```powershell
+Get-MgRoleManagementDirectoryRoleAssignment |
+Where-Object { $_.PrincipalId -eq (Get-MgContext).Account.Id } |
+Select RoleDefinitionId, DirectoryScopeId
+```
+
+This will list which role definitions are assigned to your signed-in identity.
+
+---
+
+## 📊 HTML Report Output
+
+The Remove script generates detailed card-style entries like:
+
+```html
+<div class='card'>
+<b class='role'>Role:</b> Cloud Application Administrator<br>
+<b>Role ID:</b> 158c047a-c907-455e-b76f-4fe551a6b5f7<br>
+<b>Status:</b> SUCCESS<br>
+<b>Timestamp:</b> 2025-11-17 09:47:31<br>
+</div>
+```
+
+Reports are saved in the working directory as:
+
+```text
+UserRoleRemoval-<user>-<timestamp>.html
+```
+
+If you prefer, you can create and point them into a dedicated `Reports` subfolder.
+
+---
+
+## 🧱 Example Full Workflow
+
+```powershell
+# 1. Connect to Microsoft Graph (optional; scripts will auto-connect if needed)
+Connect-MgGraph -Scopes "Directory.Read.All","RoleManagement.ReadWrite.Directory"
+
+# 2. Retrieve user's roles
+.\Get-UserRoles.ps1 -UserPrincipalName "jacob.harms@victor.org"
+
+# 3. Remove all roles for that user with reporting
+.\Get-UserRoles.ps1 -UserPrincipalName "jacob.harms@victor.org" |
+.\Remove-UserRoles.ps1
+```
+
+---
+
+## 🆘 Troubleshooting
+
+| Issue | Possible Cause | Suggested Fix |
+|-------|----------------|---------------|
+| `Module not found` | Microsoft Graph SDK not installed | Run `Install-Module Microsoft.Graph -Scope CurrentUser -Force` |
+| `403 Forbidden / Insufficient privileges` | You are not GA, PRA, or Role Management Admin | Activate PIM role or sign in as an eligible admin |
+| No roles returned | User has no active role assignments | Verify in Entra portal under **Roles and administrators → Directory roles** |
+| HTML report not created | No removals occurred or script failed early | Check console output for errors and verify permissions |
+
+---
+
+## 📌 Notes
+
+- Always run these scripts from **PowerShell 7+ (pwsh)**, not Windows PowerShell 5.1.
+- Use a test account/environment when validating behavior before running in production.
+- Consider exporting existing role assignments to CSV before removal if you need a rollback log.
+
+Happy automating! 🎯
