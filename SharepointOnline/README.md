@@ -1,48 +1,90 @@
-\# 📁 SharePoint Online Scripts
+\# 📁 SharePoint Online PowerShell Automation Library
 
 
 
-This folder contains automation related to \*\*SharePoint Online\*\* administration.
+\*A focused collection of PowerShell tools for safe SharePoint Online
+
+administration and site lifecycle operations.\*
 
 
 
----
+------------------------------------------------------------------------
 
 
 
-\## 📂 Folder Overview
+\## 🚀 Overview
 
 
 
-| Folder | Description |
+This folder contains automation built specifically for \*\*SharePoint
 
-|--------|-------------|
-
-| \[`Rename-SharepointSite`](./Rename-SharepointSite) | Automates \*\*renaming a SharePoint Online site\*\* and updating its URL with safety checks and logging. |
+Online tenant administration\*\*, with an emphasis on:
 
 
 
----
+\-   Safe operational changes  
+
+\-   Pre-change validation  
+
+\-   Blackout window enforcement  
+
+\-   Logging for change control  
+
+\-   Human-readable console output  
 
 
 
-\## 🧭 `Rename-SharepointSite` at a Glance
+------------------------------------------------------------------------
 
 
 
-The \[`Rename-SharepointSite`](./Rename-SharepointSite) solution is designed to make a risky operation \*\*predictable and repeatable\*\*:
+\# 📁 Folder Structure
 
 
 
-\- ✅ Validates the existing site and new URL
+&nbsp;   /SharepointOnline
 
-\- ✅ Checks for conflicts (e.g., deleted sites / existing URLs)
+&nbsp;       /Rename-SharepointSite
 
-\- ✅ Kicks off the \*\*site rename\*\* operation
+&nbsp;           Rename-SharePointSite.ps1     → Safely renames a SharePoint Online site and URL
 
-\- ✅ Optionally supports a \*\*blackout window\*\* so users stay out during changes
+&nbsp;           README.md                     → Full execution guide and change workflow
 
-\- ✅ Logs progress so you have a paper trail for change control
+
+
+------------------------------------------------------------------------
+
+
+
+\# 🧭 Script Categories
+
+
+
+\### 🔄 \*\*SharePoint Site Rename Automation\*\*
+
+
+
+Tools designed to make high-risk SharePoint changes predictable
+
+and repeatable.
+
+
+
+The \*\*Rename-SharepointSite\*\* solution supports:
+
+
+
+\-   Validation of existing site and target URL  
+
+\-   Checks against deleted site conflicts  
+
+\-   Maintenance window enforcement  
+
+\-   Safe execution of Rename-SPOSite  
+
+\-   Logging suitable for change management  
+
+\-   Clear rollback visibility  
 
 
 
@@ -50,55 +92,41 @@ Typical use case:
 
 
 
-> “We’re renaming the \*\*Global Bookkeeper\*\* site to \*\*GB\*\* and need the URL to match.”
+> Renaming the \*\*Global Bookkeeper\*\* SharePoint site to \*\*GB\*\* with full
+
+audit visibility and zero guesswork.
 
 
 
-This script walks through that process with guardrails so you don’t have to remember every SPO cmdlet and corner case each time.
+------------------------------------------------------------------------
 
 
 
----
+\# 📘 Requirements
 
 
 
-\## 🔧 Requirements (Common)
+These scripts may require:
 
 
 
-\- PowerShell (preferably 7+)
+\-   PowerShell 5.1 or PowerShell 7+  
 
-\- SharePoint Online Management Shell / module
+\-   SharePoint Online Management Shell  
 
-\- SharePoint admin rights in the tenant
+\-   SharePoint Administrator permissions  
 
-
-
-👉 For full parameters, examples, and step-by-step instructions, see the detailed \[`README.md` inside the Rename-SharepointSite folder](./Rename-SharepointSite/README.md).
+\-   Tenant-level rename permissions  
 
 
 
----
+------------------------------------------------------------------------
 
 
 
-\## 🎨 Conventions \& Notes
+✅ \*\*Always review the README inside each script folder before
 
-
-
-\- Scripts are written with:
-
-&nbsp; - Clear prompts and status messages
-
-&nbsp; - Logging suitable for change tickets
-
-&nbsp; - Support for running during planned maintenance windows
-
-\- Keep this parent README as a \*\*landing page\*\*; each subfolder should contain its own detailed README with parameters and examples.
-
-
-
-If you add more SharePoint tools later (e.g., site inventory, permissions reporting, bulk library operations), list them here so this page stays your main \*\*“map of the territory.”\*\*
+execution in production.\*\*
 
 
 

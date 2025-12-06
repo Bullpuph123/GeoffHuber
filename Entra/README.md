@@ -1,10 +1,116 @@
-\# 🔐 Entra Scripts Collection
+\# 🔐 Entra PowerShell Automation Library
 
 
 
-Welcome to the \*\*Entra\*\* scripts folder.  
+\*A curated collection of PowerShell scripts for Microsoft Entra ID,
 
-This directory contains tools to help automate and standardize work in \*\*Microsoft Entra ID\*\* (Azure AD), especially around admin roles and custom attributes.
+role governance, and identity lifecycle automation.\*
+
+
+
+------------------------------------------------------------------------
+
+
+
+\## 🚀 Overview
+
+
+
+This folder contains production-ready automation used for managing
+
+Microsoft Entra roles, administrative access, and security-related
+
+identity attributes.
+
+
+
+All scripts in this collection follow these standards:
+
+
+
+\-   Clean, modular structure  
+
+\-   Colorful console output  
+
+\-   CSV-driven automation where applicable  
+
+\-   WhatIf / safety-first execution  
+
+\-   Logging and error handling  
+
+\-   Detailed per-folder READMEs  
+
+
+
+------------------------------------------------------------------------
+
+
+
+\# 📁 Folder Structure
+
+
+
+&nbsp;   /Entra
+
+&nbsp;       /EntraAdminRoleSync
+
+&nbsp;           Entra-AdminRoleSync.ps1       → Sync Entra admin roles into structured groups
+
+&nbsp;           README.md
+
+
+
+&nbsp;       /EntraRoleManagement
+
+&nbsp;           Get-UserRoles.ps1             → Enumerate Entra roles for a user
+
+&nbsp;           Remove-UserRoles.ps1          → Remove Entra roles cleanly
+
+&nbsp;           README.md
+
+
+
+&nbsp;       /ProdataKeyCards
+
+&nbsp;           Batch-Set-ProdataKeyCards.ps1 → Batch set PDK card attributes using CSV
+
+&nbsp;           Get-ProdataKeyCards.ps1       → Query card attributes
+
+&nbsp;           Set-ProdataKeyCards.ps1       → Update card attributes for single user
+
+&nbsp;           cards.csv                     → Sample import format
+
+&nbsp;           README.md
+
+
+
+------------------------------------------------------------------------
+
+
+
+\# 🧭 Script Categories
+
+
+
+\### 🔐 \*\*Entra Admin Role Sync\*\*
+
+
+
+Tools that synchronize privileged role assignments into structured
+
+security groups for compliance, reporting, and automation.
+
+
+
+Typical use cases:
+
+
+
+\-   Standardizing admin access
+
+\-   Preparing for audits
+
+\-   Enforcing least-privilege by design
 
 
 
@@ -12,57 +118,25 @@ This directory contains tools to help automate and standardize work in \*\*Micro
 
 
 
-\## 📂 Folder Overview
+\### 🛡️ \*\*Entra Role Management\*\*
 
 
 
-| Folder | Description |
+Utility scripts that retrieve, assign, and remove Entra role
 
-|--------|-------------|
-
-| \[`EntraAdminRoleSync`](./EntraAdminRoleSync) | Automates \*\*admin role assignment sync\*\* in Entra ID based on configuration (CSV / groups), with safety checks and logging. |
-
-| \[`EntraRoleManagement`](./EntraRoleManagement) | General \*\*role management utilities\*\* – reporting, exporting role assignments, and helper scripts for troubleshooting and audits. |
-
-| \[`ProdataKeyCards`](./ProdataKeyCards) | Handles \*\*ProdataKey card metadata\*\* in Entra using custom security attributes (assigning card IDs, status flags, and reporting on card usage). |
+assignments using Microsoft Graph.
 
 
 
----
+Designed so Helpdesk and IT Ops can:
 
 
 
-\## 🚀 How to Use (High Level)
+\-   View current user role assignments
 
+\-   Remove elevated access safely
 
-
-> \*\*Prereqs (common across most scripts)\*\*  
-
-> - PowerShell 7+ recommended  
-
-> - Microsoft Graph / Entra modules installed  
-
-> - Appropriate permissions in Entra ID (often \*\*Privileged Role Administrator\*\* or \*\*User Administrator\*\*)
-
-
-
-\### 1. EntraAdminRoleSync
-
-
-
-\- Syncs Entra admin roles from a source of truth (CSV / groups) to actual \*\*role assignments\*\*.
-
-\- Includes:
-
-&nbsp; - Dry-run / \*\*WhatIf\*\* support
-
-&nbsp; - Logging of changes
-
-&nbsp; - Clear reporting of adds/removes
-
-
-
-👉 See the script-specific README inside \[`EntraAdminRoleSync`](./EntraAdminRoleSync) for details.
+\-   Perform targeted role cleanup
 
 
 
@@ -70,69 +144,57 @@ This directory contains tools to help automate and standardize work in \*\*Micro
 
 
 
-\### 2. EntraRoleManagement
+\### 🏷️ \*\*ProdataKey Card Automation\*\*
 
 
 
-\- Utility scripts to:
+Automation for managing ProdataKey card values stored as Entra
 
-&nbsp; - Export current role assignments
-
-&nbsp; - Help with audits and access reviews
-
-&nbsp; - Generate CSVs you can feed into other tools (like the role-sync script)
+custom security attributes.
 
 
 
-👉 Check the internal README in \[`EntraRoleManagement`](./EntraRoleManagement) for parameters and examples.
+Supports:
 
 
 
----
+\-   CSV-based bulk imports
+
+\-   Attribute corrections
+
+\-   Access reporting for facilities and security
 
 
 
-\### 3. ProdataKeyCards
+------------------------------------------------------------------------
 
 
 
-\- Manages \*\*ProdataKey\*\* card info in Entra via \*\*custom security attributes\*\*.
-
-\- Typical workflows:
-
-&nbsp; - Import card assignments from a CSV
-
-&nbsp; - Set/remove card IDs and status attributes on users
-
-&nbsp; - Generate reports for facilities / security teams
+\# 📘 Requirements
 
 
 
-👉 See the README in \[`ProdataKeyCards`](./ProdataKeyCards) for usage examples.
+These scripts may require one or more of the following:
 
 
 
----
+\-   PowerShell 5.1 or PowerShell 7+  
+
+\-   Microsoft Graph PowerShell SDK  
+
+\-   Entra role permissions appropriate to the action  
+
+\-   CSV import files for bulk actions  
 
 
 
-\## 🎯 Conventions
+------------------------------------------------------------------------
 
 
 
-\- 🧪 Use \*\*WhatIf / Confirm\*\* switches where available before making production changes.
+✅ \*\*Start by opening the README inside each subfolder for full
 
-\- 📝 Scripts are designed to be:
-
-&nbsp; - Logged
-
-&nbsp; - Re-runnable
-
-&nbsp; - Friendly to change control and audits
-
-
-
-If you’re not sure where to start, begin with the \*\*reporting/export\*\* scripts in each folder before running any \*\*change\*\* scripts.
+parameter documentation and real-world examples.\*\*
 
 
 
