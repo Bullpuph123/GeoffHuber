@@ -40,6 +40,7 @@ You are welcome to use, adapt, and contribute improvements.
             Set-ProdataKeyCards.ps1           → Update card attributes for a single user
             cards.csv                         → Sample CSV format
             README.md
+
    /SharepointOnline
    	/Rename-SharepointSite
  	    Rename-SharepointSite.ps1
