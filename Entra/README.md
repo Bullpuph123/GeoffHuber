@@ -1,194 +1,124 @@
-\# 🗂️ \*\*Entra Automation – Folder Structure\*\*
+# 🗂️ Entra Automation -- Folder Structure
 
-\*Visual map of all tools in this library\*
+*Visual map of all tools in this library*
 
+------------------------------------------------------------------------
 
+## 📁 /Entra (Root)
 
----
+### 🔐 /EntraAdminRoleSync
 
+> **Automated admin role governance**
 
+  ------------------------------------------------------------------------
+  File                            Purpose
+  ------------------------------- ----------------------------------------
+  **`Entra-AdminRoleSync.ps1`**   🔄 Sync Entra admin roles into
+                                  structured security groups
 
-\## 📁 `/Entra` (Root)
+  `README.md`                     📘 Full documentation & usage
+  ------------------------------------------------------------------------
 
+------------------------------------------------------------------------
 
+### 🛡️ /EntraRoleManagement
 
-\### 🔐 `/EntraAdminRoleSync`
+> **User-focused role inspection & cleanup**
 
-> \*\*Automated admin role governance\*\*
+  -----------------------------------------------------------------------
+  File                           Purpose
+  ------------------------------ ----------------------------------------
+  **`Get-UserRoles.ps1`**        🔍 Enumerate Entra roles for a user
 
+  **`Remove-UserRoles.ps1`**     🧹 Remove Entra roles cleanly and safely
 
+  `README.md`                    📘 Full documentation & usage
+  -----------------------------------------------------------------------
 
-| File | Purpose |
+------------------------------------------------------------------------
 
-|------|--------|
+### 🏷️ /ProdataKeyCards
 
-| \*\*`Entra-AdminRoleSync.ps1`\*\* | 🔄 Sync Entra admin roles into structured security groups |
+> **Physical access & card attribute automation**
 
-| `README.md` | 📘 Full documentation \& usage |
+  ------------------------------------------------------------------------------
+  File                                  Purpose
+  ------------------------------------- ----------------------------------------
+  **`Batch-Set-ProdataKeyCards.ps1`**   📥 Batch set PDK card attributes using
+                                        CSV
 
+  **`Get-ProdataKeyCards.ps1`**         📊 Query card attributes
 
+  **`Set-ProdataKeyCards.ps1`**         🎯 Update card attributes for a single
+                                        user
 
----
+  **`cards.csv`**                       📄 Sample import format
 
+  `README.md`                           📘 Full documentation & usage
+  ------------------------------------------------------------------------------
 
+------------------------------------------------------------------------
 
-\### 🛡️ `/EntraRoleManagement`
+# 🧭 Script Categories & Use Cases
 
-> \*\*User-focused role inspection \& cleanup\*\*
+------------------------------------------------------------------------
 
+## 🔐 Entra Admin Role Sync
 
+> *Structured, auditable, and repeatable admin role governance*
 
-| File | Purpose |
+Tools that synchronize privileged role assignments into structured\
+security groups for **compliance, reporting, and automation**.
 
-|------|--------|
+### ✅ Typical Use Cases
 
-| \*\*`Get-UserRoles.ps1`\*\* | 🔍 Enumerate Entra roles for a user |
+-   ✅ Standardizing admin access\
+-   ✅ Preparing for audits\
+-   ✅ Enforcing **least-privilege by design**
 
-| \*\*`Remove-UserRoles.ps1`\*\* | 🧹 Remove Entra roles cleanly and safely |
+------------------------------------------------------------------------
 
-| `README.md` | 📘 Full documentation \& usage |
+## 🛡️ Entra Role Management
 
+> *Day-to-day identity operations for IT & Helpdesk*
 
+Utility scripts that retrieve, assign, and remove Entra role\
+assignments using **Microsoft Graph**.
 
----
+### ✅ Designed So IT Can:
 
+-   ✅ View current user role assignments\
+-   ✅ Remove elevated access safely\
+-   ✅ Perform targeted role cleanup
 
+------------------------------------------------------------------------
 
-\### 🏷️ `/ProdataKeyCards`
+## 🏷️ ProdataKey Card Automation
 
-> \*\*Physical access \& card attribute automation\*\*
+> *Identity meets physical access control*
 
+Automation for managing ProdataKey card values stored as Entra\
+**custom security attributes**.
 
+### ✅ Supports:
 
-| File | Purpose |
+-   ✅ CSV-based bulk imports\
+-   ✅ Attribute corrections\
+-   ✅ Facilities & security reporting
 
-|------|--------|
+------------------------------------------------------------------------
 
-| \*\*`Batch-Set-ProdataKeyCards.ps1`\*\* | 📥 Batch set PDK card attributes using CSV |
+# 📘 Requirements
 
-| \*\*`Get-ProdataKeyCards.ps1`\*\* | 📊 Query card attributes |
+> *Applies across most scripts in this library*
 
-| \*\*`Set-ProdataKeyCards.ps1`\*\* | 🎯 Update card attributes for a single user |
+✅ **PowerShell 5.1 or PowerShell 7+**\
+✅ **Microsoft Graph PowerShell SDK**\
+✅ **Entra role permissions appropriate to the action**\
+✅ **CSV import files for bulk operations**
 
-| \*\*`cards.csv`\*\* | 📄 Sample import format |
+------------------------------------------------------------------------
 
-| `README.md` | 📘 Full documentation \& usage |
-
-
-
----
-
-
-
-\# 🧭 \*\*Script Categories \& Use Cases\*\*
-
-
-
----
-
-
-
-\## 🔐 \*\*Entra Admin Role Sync\*\*
-
-> \*Structured, auditable, and repeatable admin role governance\*
-
-
-
-Tools that synchronize privileged role assignments into structured  
-
-security groups for \*\*compliance, reporting, and automation\*\*.
-
-
-
-\### ✅ Typical Use Cases
-
-\- ✅ Standardizing admin access  
-
-\- ✅ Preparing for audits  
-
-\- ✅ Enforcing \*\*least-privilege by design\*\*
-
-
-
----
-
-
-
-\## 🛡️ \*\*Entra Role Management\*\*
-
-> \*Day-to-day identity operations for IT \& Helpdesk\*
-
-
-
-Utility scripts that retrieve, assign, and remove Entra role  
-
-assignments using \*\*Microsoft Graph\*\*.
-
-
-
-\### ✅ Designed So IT Can:
-
-\- ✅ View current user role assignments  
-
-\- ✅ Remove elevated access safely  
-
-\- ✅ Perform targeted role cleanup  
-
-
-
----
-
-
-
-\## 🏷️ \*\*ProdataKey Card Automation\*\*
-
-> \*Identity meets physical access control\*
-
-
-
-Automation for managing ProdataKey card values stored as Entra  
-
-\*\*custom security attributes\*\*.
-
-
-
-\### ✅ Supports:
-
-\- ✅ CSV-based bulk imports  
-
-\- ✅ Attribute corrections  
-
-\- ✅ Facilities \& security reporting  
-
-
-
----
-
-
-
-\# 📘 \*\*Requirements\*\*
-
-> \*Applies across most scripts in this library\*
-
-
-
-✅ \*\*PowerShell 5.1 or PowerShell 7+\*\*  
-
-✅ \*\*Microsoft Graph PowerShell SDK\*\*  
-
-✅ \*\*Entra role permissions appropriate to the action\*\*  
-
-✅ \*\*CSV import files for bulk operations\*\*
-
-
-
----
-
-
-
-> ✅ \*\*Always start by opening the `README.md` inside each subfolder for full  
-
-> parameter documentation and real-world execution examples.\*\*
-
-
-
+> ✅ **Always start by opening the `README.md` inside each subfolder for
+> full\
+> parameter documentation and real-world execution examples.**
