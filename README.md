@@ -29,18 +29,21 @@ You are welcome to use, adapt, and contribute improvements.
             Entra-AdminRoleSync.ps1       → Sync Entra admin roles into structured groups
             README.md
 
-    /EntraRoleManagement
-        Get-UserRoles.ps1                 → Enumerate Entra roles for a user
-        Remove-UserRoles.ps1              → Remove user Entra roles cleanly
-        README.md
+    	/EntraRoleManagement
+            Get-UserRoles.ps1                 → Enumerate Entra roles for a user
+            Remove-UserRoles.ps1              → Remove user Entra roles cleanly
+            README.md
 
-    /ProdataKeyCards
-        Batch-Set-ProdataKeyCards.ps1     → Batch set card attributes using CSV input
-        Get-ProdataKeyCards.ps1           → Query card attributes
-        Set-ProdataKeyCards.ps1           → Update card attributes for a single user
-        cards.csv                         → Sample CSV format
-        README.md
-
+    	/ProdataKeyCards
+            Batch-Set-ProdataKeyCards.ps1     → Batch set card attributes using CSV input
+            Get-ProdataKeyCards.ps1           → Query card attributes
+            Set-ProdataKeyCards.ps1           → Update card attributes for a single user
+            cards.csv                         → Sample CSV format
+            README.md
+   /SharepointOnline
+   	/Rename-SharepointSite
+ 	    Rename-SharepointSite.ps1
+	    README.md
 ------------------------------------------------------------------------
 
 # 🧭 Script Categories
