@@ -1,7 +1,3 @@
----
-
-
-
 \# 🗂️ \*\*Entra Automation – Folder Structure\*\*
 
 \*Visual map of all tools in this library\*
