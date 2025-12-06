@@ -24,6 +24,7 @@ You are welcome to use, adapt, and contribute improvements.
 
 # 📁 Repository Structure
 
+``` text
 /Entra
     /EntraAdminRoleSync
         Entra-AdminRoleSync.ps1       → Sync Entra admin roles into structured groups
@@ -45,6 +46,8 @@ You are welcome to use, adapt, and contribute improvements.
     /Rename-SharepointSite
         Rename-SharepointSite.ps1
         README.md
+```
+
 ------------------------------------------------------------------------
 
 # 🧭 Script Categories
